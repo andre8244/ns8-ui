@@ -14,6 +14,8 @@ const toastOptions = {
   containerClassName: "toastification-container",
   toastClassName: "toastification-toast",
   closeOnClick: false,
+  icon: false,
+  closeButton: false,
 };
 
 Vue.use(Toast, toastOptions);

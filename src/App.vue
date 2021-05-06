@@ -40,12 +40,4 @@ export default {
   padding: 0;
   margin-bottom: 0;
 }
-
-.Vue-Toastification__toast--default .Vue-Toastification__icon {
-  display: none;
-}
-
-.Vue-Toastification__toast--default .Vue-Toastification__close-button {
-  display: none;
-}
 </style>
