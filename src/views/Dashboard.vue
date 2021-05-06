@@ -15,7 +15,7 @@
     </div>
     <div class="bx--row">
       <div class="bx--col-md-4">
-        <div>
+        <div class="mg-top-bottom">
           <cv-icon-button
             kind="secondary"
             :icon="Flash16"
@@ -25,82 +25,98 @@
           />
         </div>
 
-        <cv-button :icon="Flash16"> Button with icon </cv-button>
+        <div class="mg-top-bottom">
+          <cv-button kind="" :icon="Flash16" @click="createInfoToast">
+            Create info toast
+          </cv-button>
+        </div>
 
-        <cv-code-snippet :light="true">{{ snippet }}</cv-code-snippet>
+        <div class="mg-top-bottom">
+          <cv-button kind="primary" :icon="Flash16" @click="createSuccessToast">
+            Create success toast
+          </cv-button>
+        </div>
 
-        <cv-date-picker kind="single" value="01/01/2020"></cv-date-picker>
+        <div class="mg-top-bottom">
+          <cv-button
+            kind="secondary"
+            :icon="Flash16"
+            @click="createWarningToast"
+          >
+            Create warning toast
+          </cv-button>
+        </div>
 
-        <cv-tag kind="blue" label="I am a tag"></cv-tag>
+        <div class="mg-top-bottom">
+          <cv-button kind="danger" :icon="Flash16" @click="createErrorToast">
+            Create error toast
+          </cv-button>
+        </div>
 
-        <cv-tile
-          kind="selectable"
-          aria-label="custom aria label"
-          :light="true"
-          value="check-1"
-        >
-          <h1>Hello</h1>
-          <p>This is some tile content</p>
-        </cv-tile>
+        <div class="mg-top-bottom">
+          <cv-code-snippet :light="true">{{ snippet }}</cv-code-snippet>
+        </div>
 
-        <cv-toggle value="check-1"> </cv-toggle>
+        <div class="mg-top-bottom">
+          <cv-date-picker kind="single" value="01/01/2020"></cv-date-picker>
+        </div>
 
-        <cv-interactive-tooltip alignment="center" direction="right">
-          <template v-if="true" slot="label"> Tooltip label </template>
-          <template v-if="true" slot="trigger"
-            ><Filter16
-              class="bx--overflow-menu__icon bx--toolbar-filter-icon"
-            />
-          </template>
-          <template v-if="true" slot="content">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, seed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <button class="bx--button">Clicky one</button>
-          </template>
-        </cv-interactive-tooltip>
+        <div class="mg-top-bottom">
+          <cv-tag kind="blue" label="I am a tag"></cv-tag>
+        </div>
 
-        <cv-toast-notification
-          v-if="toastVisible"
-          kind="info"
-          :title="toastTitle"
-          :sub-title="toastSubTitle"
-          :caption="toastCaption"
-          @close="closeToast"
-          :low-contrast="lowContrast"
-        ></cv-toast-notification>
-        <!-- <cv-toast-notification
-          v-if="toastVisible"
-          kind="warning"
-          :title="toastTitle"
-          :sub-title="toastSubTitle"
-          :caption="toastCaption"
-          @close="closeToast"
-          :low-contrast="lowContrast"
-        ></cv-toast-notification>
-        <cv-toast-notification
-          v-if="toastVisible"
-          kind="error"
-          :title="toastTitle"
-          :sub-title="toastSubTitle"
-          :caption="toastCaption"
-          @close="closeToast"
-          :low-contrast="lowContrast"
-        ></cv-toast-notification>
-        <cv-toast-notification
-          v-if="toastVisible"
-          kind="success"
-          :title="toastTitle"
-          :sub-title="toastSubTitle"
-          :caption="toastCaption"
-          @close="closeToast"
-          :low-contrast="lowContrast"
-        ></cv-toast-notification> -->
+        <div class="mg-top-bottom">
+          <cv-tile
+            kind="selectable"
+            aria-label="custom aria label"
+            :light="true"
+            value="check-1"
+          >
+            <h1>Hello</h1>
+            <p>This is some tile content</p>
+          </cv-tile>
+        </div>
 
-        <AreaChart />
+        <div class="mg-top-bottom">
+          <cv-toggle value="check-1"> </cv-toggle>
+        </div>
+
+        <div class="mg-top-bottom">
+          <cv-interactive-tooltip alignment="center" direction="right">
+            <template v-if="true" slot="label"> Tooltip label </template>
+            <template v-if="true" slot="trigger"
+              ><Filter16
+                class="bx--overflow-menu__icon bx--toolbar-filter-icon"
+              />
+            </template>
+            <template v-if="true" slot="content">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, seed
+                do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat.
+              </p>
+              <button class="bx--button">Clicky one</button>
+            </template>
+          </cv-interactive-tooltip>
+        </div>
+
+        <div class="mg-top-bottom">
+          <cv-toast-notification
+            v-if="toastVisible"
+            kind="info"
+            :title="toastTitle"
+            :sub-title="toastSubTitle"
+            :caption="toastCaption"
+            @close="closeToast"
+            :low-contrast="lowContrast"
+          ></cv-toast-notification>
+        </div>
+      </div>
+      <div class="bx--col-md-4">
+        <div class="mg-top-bottom">
+          <AreaChart />
+        </div>
       </div>
     </div>
   </div>
@@ -110,6 +126,8 @@
 import AreaChart from "@/components/AreaChart";
 import Flash16 from "@carbon/icons-vue/es/flash/16";
 import Filter16 from "@carbon/icons-vue/es/filter/16";
+import { mapState } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "Dashboard",
@@ -125,10 +143,108 @@ export default {
       Flash16, //// use mixin
     };
   },
+  computed: {
+    ...mapState(["notifications"]),
+  },
   methods: {
+    ...mapActions(["createNotification"]),
     closeToast() {
       console.log("closeToast"); ////
+    },
+    createWarningToast() {
+      const notification = {
+        title: "Low disk space",
+        text: "You are running out of disk space",
+        type: "warn",
+        read: false,
+        id: 2,
+        app: "System manager",
+      };
+
+      this.createNotification(notification);
+      this.$notify({
+        title: notification.title,
+        text: notification.text,
+        type: notification.type,
+        speed: 500,
+        data: {
+          id: notification.id,
+          app: notification.app,
+        },
+      });
+    },
+    createInfoToast() {
+      const notification = {
+        title: "Software updates",
+        text: "You have 7 new updates",
+        type: "info",
+        read: false,
+        id: 2,
+        app: "System manager",
+      };
+
+      this.createNotification(notification);
+
+      this.$notify({
+        title: notification.title,
+        text: notification.text,
+        type: notification.type,
+        speed: 500,
+        duration: 30000,
+        data: {
+          id: notification.id,
+          app: notification.app,
+        },
+      });
+    },
+    createSuccessToast() {
+      const notification = {
+        title: "Backup completed",
+        text: "Backup data has completed succesfully",
+        type: "success",
+        read: false,
+        id: 3,
+        app: "Backup manager",
+      };
+
+      this.createNotification(notification);
+
+      this.$notify({
+        title: notification.title,
+        text: notification.text,
+        type: notification.type,
+        speed: 500,
+        data: {
+          id: notification.id,
+          app: notification.app,
+        },
+      });
+    },
+    createErrorToast() {
+      const notification = {
+        title: "Network error",
+        text: "Cannot retrieve cluster info. Check your connection",
+        type: "error",
+        read: false,
+        id: 4,
+        app: "Cluster manager",
+      };
+
+      this.createNotification(notification);
+
+      this.$notify({
+        title: notification.title,
+        text: notification.text,
+        type: notification.type,
+        speed: 500,
+        data: {
+          id: notification.id,
+          app: notification.app,
+        },
+      });
     },
   },
 };
 </script>
+
+<style scoped lang="scss"></style>

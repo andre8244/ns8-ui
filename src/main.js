@@ -6,6 +6,9 @@ import store from "./store";
 import CarbonComponentsVue from "@carbon/vue";
 Vue.use(CarbonComponentsVue);
 
+import Notifications from "vue-notification";
+Vue.use(Notifications);
+
 Vue.config.productionTip = false;
 
 new Vue({
