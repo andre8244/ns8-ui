@@ -127,11 +127,12 @@ import AreaChart from "@/components/AreaChart";
 import Flash16 from "@carbon/icons-vue/es/flash/16";
 import Filter16 from "@carbon/icons-vue/es/filter/16";
 import { mapState } from "vuex";
-import { mapActions } from "vuex";
+import NotificationService from "@/services/notification";
 
 export default {
   name: "Dashboard",
   components: { AreaChart, Filter16 },
+  mixins: [NotificationService],
   data() {
     return {
       toastVisible: true,
@@ -147,7 +148,6 @@ export default {
     ...mapState(["notifications"]),
   },
   methods: {
-    ...mapActions(["createNotification"]),
     closeToast() {
       console.log("closeToast"); ////
     },
@@ -155,93 +155,37 @@ export default {
       const notification = {
         title: "Low disk space",
         text: "You are running out of disk space",
-        type: "warn",
-        read: false,
-        id: 2,
+        type: "warning",
         app: "System manager",
       };
-
       this.createNotification(notification);
-      this.$notify({
-        title: notification.title,
-        text: notification.text,
-        type: notification.type,
-        speed: 500,
-        data: {
-          id: notification.id,
-          app: notification.app,
-        },
-      });
     },
     createInfoToast() {
       const notification = {
         title: "Software updates",
         text: "You have 7 new updates",
         type: "info",
-        read: false,
-        id: 2,
         app: "System manager",
       };
-
       this.createNotification(notification);
-
-      this.$notify({
-        title: notification.title,
-        text: notification.text,
-        type: notification.type,
-        speed: 500,
-        duration: 30000,
-        data: {
-          id: notification.id,
-          app: notification.app,
-        },
-      });
     },
     createSuccessToast() {
       const notification = {
         title: "Backup completed",
         text: "Backup data has completed succesfully",
         type: "success",
-        read: false,
-        id: 3,
         app: "Backup manager",
       };
-
       this.createNotification(notification);
-
-      this.$notify({
-        title: notification.title,
-        text: notification.text,
-        type: notification.type,
-        speed: 500,
-        data: {
-          id: notification.id,
-          app: notification.app,
-        },
-      });
     },
     createErrorToast() {
       const notification = {
         title: "Network error",
         text: "Cannot retrieve cluster info. Check your connection",
         type: "error",
-        read: false,
-        id: 4,
         app: "Cluster manager",
       };
-
       this.createNotification(notification);
-
-      this.$notify({
-        title: notification.title,
-        text: notification.text,
-        type: notification.type,
-        speed: 500,
-        data: {
-          id: notification.id,
-          app: notification.app,
-        },
-      });
     },
   },
 };

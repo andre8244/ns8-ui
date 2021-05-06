@@ -11,17 +11,13 @@ export default new Vuex.Store({
   mutations: {
     addNotification(state, notification) {
       state.notifications.unshift(notification);
-
-      console.log("state.notifications", state.notifications); ////
     },
     setShowNotificationDrawer(state, value) {
       state.showNotificationDrawer = value;
-
-      console.log("state.showNotificationDrawer", state.showNotificationDrawer); ////
     },
   },
   actions: {
-    createNotification(context, notification) {
+    createNotificationInStore(context, notification) {
       context.commit("addNotification", notification);
     },
     updateShowNotificationDrawer(context, value) {

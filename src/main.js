@@ -6,8 +6,17 @@ import store from "./store";
 import CarbonComponentsVue from "@carbon/vue";
 Vue.use(CarbonComponentsVue);
 
-import Notifications from "vue-notification";
-Vue.use(Notifications);
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
+//// move somewhere else?
+const toastOptions = {
+  containerClassName: "toastification-container",
+  toastClassName: "toastification-toast",
+  closeOnClick: false,
+};
+
+Vue.use(Toast, toastOptions);
 
 Vue.config.productionTip = false;
 

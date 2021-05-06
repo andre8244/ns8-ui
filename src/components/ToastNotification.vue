@@ -50,7 +50,7 @@
         type="button"
         data-notification-btn
         :class="`${carbonPrefix}--toast-notification__close-button`"
-        @click="$emit('close')"
+        @click="$emit('close-toast')"
       >
         <Close20 :class="`${carbonPrefix}--toast-notification__close-icon`" />
       </button>
@@ -62,7 +62,7 @@
 import { CvToastNotification } from "@carbon/vue";
 
 export default {
-  name: "CustomNotification",
+  name: "ToastNotification",
   extends: CvToastNotification,
   props: {
     showCloseButton: Boolean,
@@ -77,6 +77,7 @@ export default {
 <style scoped lang="scss">
 .notification {
   margin-bottom: 0;
+  margin-right: 0;
 }
 
 .action {
@@ -96,5 +97,14 @@ export default {
 
 .notification-caption {
   margin-bottom: 0.5rem;
+}
+
+.cv-notifiation.bx--toast-notification.notification {
+  width: 25vw;
+  min-width: 20rem;
+}
+
+.notification-drawer .cv-notifiation.bx--toast-notification.notification {
+  width: 100%;
 }
 </style>

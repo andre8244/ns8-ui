@@ -11,8 +11,13 @@
     </cv-header-nav>
 
     <template slot="header-global">
-      <cv-header-global-action aria-label="Notifications">
-        <notification-20 @click="toggleNotificationDrawer" />
+      <cv-header-global-action
+        aria-label="Notifications"
+        class="notifications-button"
+        @click="toggleNotificationDrawer"
+      >
+        <notification-20 />
+        <span class="notifications-badge"></span>
       </cv-header-global-action>
       <cv-header-global-action aria-label="User avatar">
         <user-avatar-20 />
@@ -21,17 +26,20 @@
         <app-switcher-20 />
       </cv-header-global-action>
     </template>
-    <div v-if="showNotificationDrawer" class="notification-drawer">
-      &nbsp;asdf ////
-      <div v-for="(notification, index) in notifications" :key="index">
-        <custom-notification
-          :kind="notification.type === 'warn' ? 'warning' : notification.type"
-          :title="notification.title"
-          :sub-title="notification.text"
-          :low-contrast="false"
-        />
+    <transition name="slide">
+      <div v-if="showNotificationDrawer" class="notification-drawer">
+        <h5>Notifications</h5>
+        <!--  //// empty state -->
+        <div v-for="(notification, index) in notifications" :key="index">
+          <toast-notification
+            :kind="notification.type"
+            :title="notification.title"
+            :sub-title="notification.text"
+            :low-contrast="false"
+          />
+        </div>
       </div>
-    </div>
+    </transition>
   </cv-header>
 </template>
 
@@ -41,7 +49,7 @@ import UserAvatar20 from "@carbon/icons-vue/es/user--avatar/20";
 import AppSwitcher20 from "@carbon/icons-vue/es/app-switcher/20";
 import { mapState } from "vuex";
 import { mapActions } from "vuex";
-import CustomNotification from "@/components/CustomNotification";
+import ToastNotification from "@/components/ToastNotification";
 
 export default {
   name: "ShellHeader",
@@ -49,7 +57,7 @@ export default {
     Notification20,
     UserAvatar20,
     AppSwitcher20,
-    CustomNotification,
+    ToastNotification,
   },
   computed: {
     ...mapState({
@@ -74,13 +82,42 @@ export default {
   border-left: 1px solid $interactive-02;
   color: $ui-01;
   height: 10rem;
-  width: 25rem;
+  width: 28vw;
+  min-width: 23rem;
   height: 100vh;
   position: fixed;
   top: 3rem;
   right: 0;
-  z-index: 8000;
+  z-index: 10000;
   overflow: auto;
-  padding: 0.5rem;
+  padding: 1rem;
+}
+
+.notification-drawer-header {
+  @include carbon--type-style("productive-heading-02");
+}
+
+.notifications-button {
+  position: relative;
+}
+
+.notifications-badge {
+  position: absolute;
+  top: 12%;
+  left: 62%;
+  height: 7px;
+  width: 7px;
+  background-color: $danger-01;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-enter,
+.slide-leave-to {
+  transform: translateX(30vw);
 }
 </style>
