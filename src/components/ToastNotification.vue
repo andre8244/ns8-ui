@@ -7,6 +7,7 @@
         `${carbonPrefix}--toast-notification--${kind.toLowerCase()}`,
         { [`${carbonPrefix}--toast-notification--low-contrast`]: lowContrast },
         `notification`,
+        { 'notification-read': read },
       ]"
       v-on="$listeners"
       :role="isAlert ? 'alert' : undefined"
@@ -65,16 +66,26 @@ export default {
   name: "ToastNotification",
   extends: CvToastNotification,
   props: {
-    showCloseButton: Boolean,
-    default: function () {
-      return true;
+    showCloseButton: {
+      type: Boolean,
+      default: function () {
+        return true;
+      },
     },
     actionLabel: { type: String, default: "" },
+    read: {
+      type: Boolean,
+      default: function () {
+        return false;
+      },
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
+@import "../styles/carbon-utils";
+
 .notification {
   margin-bottom: 0;
   margin-right: 0;
@@ -106,5 +117,18 @@ export default {
 
 .notification-drawer .cv-notifiation.bx--toast-notification.notification {
   width: 100%;
+  cursor: pointer;
+}
+
+.notification-drawer
+  .cv-notifiation.bx--toast-notification.notification.notification-read {
+  border-color: $ui-04;
+  background-color: #555555;
+}
+
+.notification-drawer
+  .cv-notifiation.bx--toast-notification.notification.notification-read
+  .bx--toast-notification__title {
+  font-weight: normal;
 }
 </style>

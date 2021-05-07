@@ -40,4 +40,21 @@ export default {
   padding: 0;
   margin-bottom: 0;
 }
+
+.empty-state {
+  text-align: center;
+  margin: $spacing-09;
+}
+
+.empty-state .image {
+  margin-bottom: $spacing-05;
+}
+
+.empty-state .title {
+  margin-bottom: $spacing-05;
+}
+
+.empty-state .description {
+  margin-bottom: $spacing-05;
+}
 </style>

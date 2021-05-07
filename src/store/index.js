@@ -8,20 +8,40 @@ export default new Vuex.Store({
     notifications: [],
     showNotificationDrawer: false,
   },
+  getters: {
+    unreadNotifications: (state) => {
+      return state.notifications.filter((notification) => !notification.read);
+    },
+    unreadNotificationsCount: (state, getters) => {
+      return getters.unreadNotifications.length;
+    },
+  },
   mutations: {
-    addNotification(state, notification) {
+    createNotification(state, notification) {
       state.notifications.unshift(notification);
     },
     setShowNotificationDrawer(state, value) {
       state.showNotificationDrawer = value;
     },
+    setNotificationRead(state, notificationId) {
+      const notification = state.notifications.find(
+        (n) => n.id == notificationId
+      );
+
+      if (notification) {
+        notification.read = true;
+      }
+    },
   },
   actions: {
     createNotificationInStore(context, notification) {
-      context.commit("addNotification", notification);
+      context.commit("createNotification", notification);
     },
-    updateShowNotificationDrawer(context, value) {
+    setShowNotificationDrawerInStore(context, value) {
       context.commit("setShowNotificationDrawer", value);
+    },
+    setNotificationReadInStore(context, notificationId) {
+      context.commit("setNotificationRead", notificationId);
     },
   },
   modules: {},

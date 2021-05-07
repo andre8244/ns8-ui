@@ -53,6 +53,10 @@
           </cv-button>
         </div>
 
+        <pictogram width="48" height="48" title="gear">
+          <gear />
+        </pictogram>
+
         <div class="mg-top-bottom">
           <cv-code-snippet :light="true">{{ snippet }}</cv-code-snippet>
         </div>
@@ -128,10 +132,12 @@ import Flash16 from "@carbon/icons-vue/es/flash/16";
 import Filter16 from "@carbon/icons-vue/es/filter/16";
 import { mapState } from "vuex";
 import NotificationService from "@/services/notification";
+import Pictogram from "@/components/Pictogram";
+import Gear from "@/components/pictograms/Gear";
 
 export default {
   name: "Dashboard",
-  components: { AreaChart, Filter16 },
+  components: { AreaChart, Filter16, Pictogram, Gear },
   mixins: [NotificationService],
   data() {
     return {
