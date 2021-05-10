@@ -57,6 +57,23 @@
           <gear />
         </pictogram>
 
+        <div>
+          <div>Now: {{ now }}</div>
+          <div>Now: {{ new Date() | date }}</div>
+          <div>Now: {{ $date(new Date()) }}</div>
+          <div>
+            Relative: {{ formatRelative(subDays(new Date(), 2), new Date()) }}
+          </div>
+          <div>
+            Relative 2:
+            {{
+              formatDistance(subDays(new Date(), 2), new Date(), {
+                addSuffix: true,
+              })
+            }}
+          </div>
+        </div>
+
         <div class="mg-top-bottom">
           <cv-code-snippet :light="true">{{ snippet }}</cv-code-snippet>
         </div>
@@ -131,9 +148,10 @@ import AreaChart from "@/components/AreaChart";
 import Flash16 from "@carbon/icons-vue/es/flash/16";
 import Filter16 from "@carbon/icons-vue/es/filter/16";
 import { mapState } from "vuex";
-import NotificationService from "@/services/notification";
+import NotificationService from "@/mixins/notification";
 import Pictogram from "@/components/Pictogram";
 import Gear from "@/components/pictograms/Gear";
+import { formatRelative, formatDistance, subDays } from "date-fns";
 
 export default {
   name: "Dashboard",
@@ -148,10 +166,17 @@ export default {
       lowContrast: false,
       snippet: 'printf("A short bit of code.");',
       Flash16, //// use mixin
+      formatRelative, //// use mixin
+      subDays,
+      formatDistance,
     };
   },
   computed: {
     ...mapState(["notifications"]),
+    ////
+    now() {
+      return this.$date(new Date());
+    },
   },
   methods: {
     closeToast() {

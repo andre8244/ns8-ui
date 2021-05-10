@@ -16,12 +16,14 @@ export default {
       }
 
       //// need to generate a unique id for notifications?
-      if (!notification.id) {
-        notification.id = new Date().getTime();
+      const now = new Date();
 
-        if (!notification.timestamp) {
-          notification.timestamp = notification.id;
-        }
+      if (!notification.id) {
+        notification.id = now.getTime();
+      }
+
+      if (!notification.timestamp) {
+        notification.timestamp = now;
       }
 
       // create notification in vuex store

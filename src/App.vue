@@ -57,4 +57,13 @@ export default {
 .empty-state .description {
   margin-bottom: $spacing-05;
 }
+
+// timestamp tooltip
+.timestamp button span {
+  background-color: $ui-05 !important;
+}
+.timestamp
+  .bx--tooltip__trigger.bx--tooltip--bottom.bx--tooltip--align-center::before {
+  border-bottom-color: $ui-05 !important;
+}
 </style>

@@ -9,6 +9,9 @@ Vue.use(CarbonComponentsVue);
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
+import VueDateFns from "vue-date-fns";
+Vue.use(VueDateFns);
+
 //// move somewhere else?
 const toastOptions = {
   containerClassName: "toastification-container",

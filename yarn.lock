@@ -3528,6 +3528,11 @@ date-fns@2.8.1:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.8.1.tgz#2109362ccb6c87c3ca011e9e31f702bc09e4123b"
   integrity sha512-EL/C8IHvYRwAHYgFRse4MGAPSqlJVlOrhVYZ75iQBKrnv+ZedmYsgwH3t+BCDuZDXpoo07+q9j4qgSSOa7irJg==
 
+date-fns@^2.0.0:
+  version "2.21.2"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.21.2.tgz#9db92305cf00626e9122e56c72195b17725594aa"
+  integrity sha512-FMkG7pIPx64mGIpS2LOb3Wp3O606H/hatoiz7G0oiYWai1izdM4tF1dd7QABv2NogkIDI4wxsfLLFQSuVvDHgA==
+
 de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/de-indent/download/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
@@ -9016,6 +9021,13 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
+
+vue-date-fns@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/vue-date-fns/-/vue-date-fns-2.0.1.tgz#a2a0d42552badd57f9ffd9a7a09d75331933495a"
+  integrity sha512-j2G97bVOKO0mVfFEnzCu5dQU0dgD8jLAAVU0dGRDqxZzzNXqep7d3WEGuuJ6mNOP5PM7GE+UqpKYfkL/LNmDKQ==
+  dependencies:
+    date-fns "^2.0.0"
 
 vue-eslint-parser@^7.0.0:
   version "7.6.0"

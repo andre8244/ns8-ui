@@ -29,20 +29,22 @@
           v-html="subTitle"
         ></p>
         <p
-          v-if="caption"
-          :class="[
-            `${carbonPrefix}--toast-notification__caption`,
-            `notification-caption`,
-          ]"
-          v-html="caption"
-        ></p>
-        <p
           v-if="actionLabel"
           :class="[`${carbonPrefix}--toast-notification__caption`, `action`]"
         >
           <cv-link @click="$emit('action')" :class="`action-button`">
             {{ actionLabel }}
           </cv-link>
+        </p>
+
+        <p v-if="timestamp" class="timestamp">
+          <cv-tooltip alignment="center" direction="bottom" :tip="timestamp">
+            {{
+              formatDistance(timestamp, new Date(), {
+                addSuffix: true,
+              })
+            }}
+          </cv-tooltip>
         </p>
       </div>
       <button
@@ -61,10 +63,12 @@
 
 <script>
 import { CvToastNotification } from "@carbon/vue";
+import DateTimeService from "@/mixins/datetime";
 
 export default {
   name: "ToastNotification",
   extends: CvToastNotification,
+  mixins: [DateTimeService],
   props: {
     showCloseButton: {
       type: Boolean,
@@ -78,6 +82,9 @@ export default {
       default: function () {
         return false;
       },
+    },
+    timestamp: {
+      type: Date,
     },
   },
 };
@@ -93,7 +100,7 @@ export default {
 
 .action {
   padding-top: 0;
-  margin-top: -0.5rem;
+  margin-bottom: $spacing-04;
 }
 
 .action-button {
@@ -102,12 +109,8 @@ export default {
 }
 
 .notification-text {
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.notification-caption {
-  margin-bottom: 0.5rem;
+  margin-top: $spacing-03;
+  margin-bottom: $spacing-04;
 }
 
 .cv-notifiation.bx--toast-notification.notification {
@@ -130,5 +133,15 @@ export default {
   .cv-notifiation.bx--toast-notification.notification.notification-read
   .bx--toast-notification__title {
   font-weight: normal;
+}
+
+.timestamp {
+  margin-bottom: $spacing-05;
+  line-height: 1.29;
+}
+
+.timestamp button {
+  @include carbon--type-style("body-short-01");
+  color: $ui-04;
 }
 </style>

@@ -62,6 +62,7 @@
             actionLabel="Details"
             @action="notificationAction"
             :read="notification.read"
+            :timestamp="notification.timestamp"
             @click="setNotificationReadInStore(notification.id)"
           />
         </div>
