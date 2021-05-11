@@ -3,13 +3,11 @@
     <cv-skip-to-content href="#main-content"
       >Skip to content</cv-skip-to-content
     >
-
-    <cv-header-name to="/" prefix="">NethServer 8</cv-header-name>
-
+    <cv-header-name to="/" prefix="">{{ PRODUCT_NAME }}</cv-header-name>
     <cv-header-nav>
+      <cv-header-menu-item to="/dashboard">Dashboard</cv-header-menu-item>
       <cv-header-menu-item to="/about">About</cv-header-menu-item>
     </cv-header-nav>
-
     <template slot="header-global">
       <cv-header-global-action
         aria-label="Notifications"
@@ -72,6 +70,7 @@
 </template>
 
 <script>
+import ConfigurationService from "@/mixins/configuration";
 import Notification20 from "@carbon/icons-vue/es/notification/20";
 import NotificationNew20 from "@carbon/icons-vue/es/notification--new/20";
 import UserAvatar20 from "@carbon/icons-vue/es/user--avatar/20";
@@ -96,6 +95,7 @@ export default {
     ExclamationMark,
     Close20, //// move to mixin
   },
+  mixins: [ConfigurationService],
   data() {
     return {
       Close20, //// move to mixin

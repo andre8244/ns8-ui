@@ -38,7 +38,11 @@
         </p>
 
         <p v-if="timestamp" class="timestamp">
-          <cv-tooltip alignment="center" direction="bottom" :tip="timestamp">
+          <cv-tooltip
+            alignment="center"
+            direction="bottom"
+            :tip="timestamp.toString()"
+          >
             {{
               formatDistance(timestamp, new Date(), {
                 addSuffix: true,

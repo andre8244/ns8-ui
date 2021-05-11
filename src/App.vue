@@ -21,6 +21,10 @@ export default {
 <style lang="scss">
 @import "./styles/carbon";
 
+a {
+  cursor: pointer;
+}
+
 .notification {
   margin-top: 3rem;
 }
@@ -28,6 +32,10 @@ export default {
 .mg-top-bottom {
   margin-top: $spacing-05;
   margin-bottom: $spacing-05;
+}
+
+.mg-bottom-md {
+  margin-bottom: $spacing-05 !important;
 }
 
 .Vue-Toastification__container.top-right.toastification-container {
@@ -39,6 +47,16 @@ export default {
   background-color: transparent;
   padding: 0;
   margin-bottom: 0;
+}
+
+.page-title {
+  margin-top: $spacing-07;
+  margin-bottom: $spacing-05;
+}
+
+.content-tile {
+  margin-top: $spacing-05;
+  margin-bottom: $spacing-05;
 }
 
 .empty-state {
