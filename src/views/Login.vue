@@ -7,6 +7,14 @@
             <cv-tile :light="true" class="login-tile">
               <h2 class="login-title">Log in</h2>
               <div v-if="step === 'username'">
+                <cv-inline-notification
+                  v-if="error.login"
+                  kind="error"
+                  title="Cannot log in:"
+                  :sub-title="error.login"
+                  low-contrast
+                >
+                </cv-inline-notification>
                 <cv-form @submit.prevent="checkUsername" class="login-form">
                   <cv-text-input
                     label="Username"
@@ -33,8 +41,12 @@
                 </cv-form>
               </div>
               <div v-else-if="step === 'password'">
-                Logging in as {{ username }}
-                <cv-link @click="goToUsername">Not you?</cv-link>
+                <span
+                  >Logging in as <strong>{{ username }}</strong></span
+                >
+                <cv-link @click="goToUsername" class="not-you"
+                  >Not you?</cv-link
+                >
                 <cv-form @submit.prevent="checkPassword" class="login-form">
                   <cv-text-input
                     label="Password"
@@ -67,10 +79,13 @@
 
 <script>
 import IconService from "@/mixins/icon";
+import LoginService from "@/mixins/login";
+import StorageService from "@/mixins/storage";
+import to from "await-to-js";
 
 export default {
   name: "Login",
-  mixins: [IconService],
+  mixins: [IconService, LoginService, StorageService],
   data() {
     return {
       username: "",
@@ -80,10 +95,10 @@ export default {
       error: {
         username: "",
         password: "",
+        login: "",
       },
     };
   },
-  computed: {},
   mounted() {
     this.focusUsername();
   },
@@ -99,18 +114,50 @@ export default {
         this.focusPassword();
       }
     },
-    checkPassword() {
+    async checkPassword() {
       this.error.password = "";
 
       if (!this.password.trim()) {
         this.error.password = "Password is required";
         this.focusPassword();
       } else {
-        console.log("login"); ////
+        // invoke login API
+        const [loginError, response] = await to(
+          this.login(this.username, this.password)
+        );
+
+        if (loginError) {
+          this.handleLoginError(loginError);
+          return;
+        }
+
+        console.log("RESPONSE", response); ////
+
+        const loggedUser = {
+          username: this.username,
+          token: response.data.token,
+        };
+
+        this.saveToStorage("loggedUser", loggedUser);
       }
+    },
+    handleLoginError(loginError) {
+      switch (loginError.response.data.Code) {
+        case 401:
+        case 403:
+          console.log("error 40x"); ////
+          this.error.login = "Invalid username or password";
+          break;
+        case 500:
+          this.error.login = "Something went wrong";
+      }
+      this.step = "username";
+      this.password = "";
+      this.focusUsername();
     },
     goToUsername() {
       this.step = "username";
+      this.username = "";
       this.password = "";
       this.focusUsername();
     },
@@ -157,11 +204,16 @@ export default {
   display: flex;
   height: 4rem;
   justify-content: flex-end;
+  margin-top: $spacing-07;
 }
 
 .login-button {
   width: 50%;
   height: 100%;
   margin-right: -1rem;
+}
+
+.not-you {
+  margin-left: $spacing-03;
 }
 </style>

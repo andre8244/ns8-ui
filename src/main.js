@@ -12,6 +12,10 @@ import "vue-toastification/dist/index.css";
 import VueDateFns from "vue-date-fns";
 Vue.use(VueDateFns);
 
+import axios from "axios";
+import VueAxios from "vue-axios";
+Vue.use(VueAxios, axios);
+
 //// move somewhere else?
 const toastOptions = {
   containerClassName: "toastification-container",

@@ -5,8 +5,9 @@
     >
     <cv-header-name to="/" prefix="">{{ PRODUCT_NAME }}</cv-header-name>
     <cv-header-nav>
-      <cv-header-menu-item to="/dashboard">Dashboard</cv-header-menu-item>
-      <cv-header-menu-item to="/about">About</cv-header-menu-item>
+      <cv-header-menu-item to="/tasks">Tasks</cv-header-menu-item>
+      <cv-header-menu-item to="/login">Login ////</cv-header-menu-item>
+      <cv-header-menu-item @click="logout">Logout ////</cv-header-menu-item>
     </cv-header-nav>
     <template slot="header-global">
       <cv-header-global-action
@@ -82,6 +83,7 @@ import { mapGetters } from "vuex";
 import ToastNotification from "@/components/ToastNotification";
 import Pictogram from "@/components/Pictogram";
 import ExclamationMark from "@/components/pictograms/ExclamationMark";
+import StorageService from "@/mixins/storage";
 
 export default {
   name: "ShellHeader",
@@ -95,7 +97,7 @@ export default {
     ExclamationMark,
     Close20, //// move to mixin
   },
-  mixins: [ConfigurationService],
+  mixins: [ConfigurationService, StorageService],
   data() {
     return {
       Close20, //// move to mixin
@@ -121,6 +123,13 @@ export default {
     },
     notificationAction() {
       console.log("notificationAction"); ////
+    },
+    logout() {
+      this.deleteFromStorage("loggedUser"); ////
+
+      if (this.$route.name !== "Login") {
+        this.$router.push("login");
+      }
     },
   },
 };
