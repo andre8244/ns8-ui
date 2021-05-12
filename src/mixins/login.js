@@ -1,11 +1,8 @@
-import ConfigurationService from "@/mixins/configuration";
-
 export default {
   name: "LoginService",
-  mixins: [ConfigurationService],
   computed: {
     apiUrl() {
-      return this.API_SCHEME + this.API_ENDPOINT;
+      return this.$root.config.API_SCHEME + this.$root.config.API_ENDPOINT;
     },
   },
   methods: {

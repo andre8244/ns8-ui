@@ -1,11 +1,14 @@
 export default {
   name: "UtilService",
+  data() {
+    return {
+      GENERIC_ERROR_MESSAGE: "Something went wrong",
+    };
+  },
   methods: {
     getErrorMessage(error) {
-      const errorMessage = "Something went wrong";
-
-      if (!error.response) {
-        return errorMessage;
+      if (!error.response && error.message === "Network Error") {
+        return "Network error"; //// use i18n string
       }
 
       switch (error.response.status) {
@@ -13,7 +16,7 @@ export default {
           return "You don't have permission to access this resource";
       }
 
-      return errorMessage;
+      return this.GENERIC_ERROR_MESSAGE;
     },
   },
 };

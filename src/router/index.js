@@ -31,7 +31,7 @@ const router = new VueRouter({
   routes,
 });
 
-// if there is no auth token in local storage, then go to login page
+// go to login page if there is no auth token in local storage
 router.beforeEach((to, from, next) => {
   let isAuthenticated = false;
   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));

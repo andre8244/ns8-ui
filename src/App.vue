@@ -11,32 +11,44 @@
 import ShellHeader from "./components/ShellHeader";
 import axios from "axios";
 import StorageService from "@/mixins/storage";
+import WebSocketService from "@/mixins/websocket";
 
 export default {
   name: "App",
   components: {
     ShellHeader,
   },
-  mixins: [StorageService],
+  mixins: [StorageService, WebSocketService],
   created() {
     // register to logout event
     this.$root.$on("logout", this.logout);
 
-    // logout if 401 response code is intercepted
-    const context = this;
-    axios.interceptors.response.use(
-      function (response) {
-        return response;
-      },
-      function (error) {
-        if (error.response && error.response.status == 401) {
-          context.$root.$emit("logout");
-        }
-        return Promise.reject(error);
-      }
-    );
+    this.initWebSocket();
+
+    this.configureAxiosInterceptors();
+  },
+  beforeDestroy() {
+    // remove all event listeners
+    this.$root.$off();
+
+    this.closeWebSocket();
   },
   methods: {
+    configureAxiosInterceptors() {
+      const context = this;
+      axios.interceptors.response.use(
+        function (response) {
+          return response;
+        },
+        function (error) {
+          // logout if 401 response code is intercepted
+          if (error.response && error.response.status == 401) {
+            context.$root.$emit("logout");
+          }
+          return Promise.reject(error);
+        }
+      );
+    },
     logout() {
       this.deleteFromStorage("loggedUser");
 

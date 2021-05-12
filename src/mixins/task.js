@@ -1,12 +1,11 @@
-import ConfigurationService from "@/mixins/configuration";
 import StorageService from "@/mixins/storage";
 
 export default {
   name: "TaskService",
-  mixins: [ConfigurationService, StorageService],
+  mixins: [StorageService],
   computed: {
     apiUrl() {
-      return this.API_SCHEME + this.API_ENDPOINT;
+      return this.$root.config.API_SCHEME + this.$root.config.API_ENDPOINT;
     },
   },
   methods: {
@@ -16,7 +15,7 @@ export default {
         : "";
       return this.axios.get(this.apiUrl + "/tasks/cluster", {
         headers: {
-          Authorization: `Bearer ${token}`, ////
+          Authorization: `Bearer ${token}`,
         },
       });
     },

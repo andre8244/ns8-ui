@@ -1,10 +1,16 @@
+import { mapState } from "vuex";
 import { mapActions } from "vuex";
 import ToastNotification from "@/components/ToastNotification";
 
 export default {
   name: "NotificationService",
+  computed: {
+    ...mapState({
+      notifications: (state) => state.notifications,
+    }),
+  },
   methods: {
-    ...mapActions(["createNotificationInStore"]),
+    ...mapActions(["createNotificationInStore", "updateNotificationInStore"]),
     createNotification(notification) {
       // fill missing attributes
       if (!notification.type) {
@@ -59,6 +65,19 @@ export default {
       this.$toast(toast, {
         timeout: toastTimeout,
       });
+    },
+    putNotification(notification) {
+      const notificationFound = this.notifications.find(
+        (n) => n.id === notification.id
+      );
+
+      if (notificationFound) {
+        console.log("updating notification", notification); ////
+        this.updateNotificationInStore(notification);
+      } else {
+        console.log("creating notification", notification); ////
+        this.createNotification(notification);
+      }
     },
   },
 };

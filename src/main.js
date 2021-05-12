@@ -16,6 +16,15 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 Vue.use(VueAxios, axios);
 
+import VueNativeSock from "vue-native-websocket";
+////
+Vue.use(VueNativeSock, "ws://", {
+  format: "json",
+  reconnection: true,
+  reconnectionDelay: 3000,
+  connectManually: true,
+});
+
 //// move somewhere else?
 const toastOptions = {
   containerClassName: "toastification-container",
@@ -32,5 +41,8 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  created: function () {
+    this.config = window.CONFIG;
+  },
   render: (h) => h(App),
 }).$mount("#app");

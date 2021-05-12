@@ -81,12 +81,14 @@ import IconService from "@/mixins/icon";
 import LoginService from "@/mixins/login";
 import StorageService from "@/mixins/storage";
 import InlineNotification from "@/components/InlineNotification";
+import UtilService from "@/mixins/util";
+
 import to from "await-to-js";
 
 export default {
   name: "Login",
   components: { InlineNotification },
-  mixins: [IconService, LoginService, StorageService],
+  mixins: [IconService, LoginService, StorageService, UtilService],
   data() {
     return {
       username: "",
@@ -132,8 +134,6 @@ export default {
           return;
         }
 
-        console.log("RESPONSE", response); ////
-
         const loggedUser = {
           username: this.username,
           token: response.data.token,
@@ -147,7 +147,7 @@ export default {
       }
     },
     handleLoginError(error) {
-      let errorMessage = "Something went wrong";
+      let errorMessage = this.GENERIC_ERROR_MESSAGE;
 
       if (error.response) {
         switch (error.response.data.Code) {
@@ -155,6 +155,8 @@ export default {
             errorMessage = "Invalid username or password";
             break;
         }
+      } else if (error.message === "Network Error") {
+        errorMessage = "Network error"; //// use i18n string
       }
 
       this.error.login = errorMessage;
