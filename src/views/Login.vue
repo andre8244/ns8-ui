@@ -7,14 +7,13 @@
             <cv-tile :light="true" class="login-tile">
               <h2 class="login-title">Log in</h2>
               <div v-if="step === 'username'">
-                <cv-inline-notification
+                <InlineNotification
                   v-if="error.login"
                   kind="error"
                   title="Cannot log in:"
                   :sub-title="error.login"
                   low-contrast
-                >
-                </cv-inline-notification>
+                />
                 <cv-form @submit.prevent="checkUsername" class="login-form">
                   <cv-text-input
                     label="Username"
@@ -81,10 +80,12 @@
 import IconService from "@/mixins/icon";
 import LoginService from "@/mixins/login";
 import StorageService from "@/mixins/storage";
+import InlineNotification from "@/components/InlineNotification";
 import to from "await-to-js";
 
 export default {
   name: "Login",
+  components: { InlineNotification },
   mixins: [IconService, LoginService, StorageService],
   data() {
     return {
@@ -139,18 +140,24 @@ export default {
         };
 
         this.saveToStorage("loggedUser", loggedUser);
+
+        if (this.$route.name !== "Dashboard") {
+          this.$router.push("dashboard");
+        }
       }
     },
-    handleLoginError(loginError) {
-      switch (loginError.response.data.Code) {
-        case 401:
-        case 403:
-          console.log("error 40x"); ////
-          this.error.login = "Invalid username or password";
-          break;
-        case 500:
-          this.error.login = "Something went wrong";
+    handleLoginError(error) {
+      let errorMessage = "Something went wrong";
+
+      if (error.response) {
+        switch (error.response.data.Code) {
+          case 401:
+            errorMessage = "Invalid username or password";
+            break;
+        }
       }
+
+      this.error.login = errorMessage;
       this.step = "username";
       this.password = "";
       this.focusUsername();

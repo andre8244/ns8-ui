@@ -125,11 +125,7 @@ export default {
       console.log("notificationAction"); ////
     },
     logout() {
-      this.deleteFromStorage("loggedUser"); ////
-
-      if (this.$route.name !== "Login") {
-        this.$router.push("login");
-      }
+      this.$root.$emit("logout");
     },
   },
 };

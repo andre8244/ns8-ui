@@ -9,11 +9,42 @@
 
 <script>
 import ShellHeader from "./components/ShellHeader";
+import axios from "axios";
+import StorageService from "@/mixins/storage";
 
 export default {
   name: "App",
   components: {
     ShellHeader,
+  },
+  mixins: [StorageService],
+  created() {
+    // register to logout event
+    this.$root.$on("logout", this.logout);
+
+    // logout if 401 response code is intercepted
+    const context = this;
+    axios.interceptors.response.use(
+      function (response) {
+        return response;
+      },
+      function (error) {
+        if (error.response && error.response.status == 401) {
+          context.$root.$emit("logout");
+        }
+        return Promise.reject(error);
+      }
+    );
+  },
+  methods: {
+    logout() {
+      this.deleteFromStorage("loggedUser");
+
+      // redirect to login page
+      if (this.$route.name !== "Login") {
+        this.$router.push("login");
+      }
+    },
   },
 };
 </script>
