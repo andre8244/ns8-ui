@@ -17,10 +17,14 @@
         class="notifications-button"
         @click="toggleNotificationDrawer"
       >
-        <NotificationNew20 v-if="unreadNotificationsCount > 0" />
-        <Notification20 v-else />
-        <!-- //// remove -->
-        <!-- <span class="notifications-badge"></span> -->
+        <!-- //// -->
+        <!-- <NotificationNew20 v-if="unreadNotificationsCount > 0" />
+        <Notification20 v-else /> -->
+        <Notification20 />
+        <span
+          class="notifications-badge"
+          v-if="unreadNotificationsCount > 0"
+        ></span>
       </cv-header-global-action>
       <cv-header-global-action aria-label="User avatar">
         <user-avatar-20 />
@@ -54,7 +58,7 @@
           </div>
         </div>
         <div v-else v-for="(notification, index) in notifications" :key="index">
-          <toast-notification
+          <ToastNotification
             :kind="notification.type"
             :title="notification.title"
             :sub-title="notification.text"
@@ -73,11 +77,11 @@
 </template>
 
 <script>
+import Close20 from "@carbon/icons-vue/es/close/20";
 import Notification20 from "@carbon/icons-vue/es/notification/20";
-import NotificationNew20 from "@carbon/icons-vue/es/notification--new/20";
+// import NotificationNew20 from "@carbon/icons-vue/es/notification--new/20"; ////
 import UserAvatar20 from "@carbon/icons-vue/es/user--avatar/20";
 import AppSwitcher20 from "@carbon/icons-vue/es/app-switcher/20";
-import Close20 from "@carbon/icons-vue/es/close/20";
 import { mapState } from "vuex";
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
@@ -85,25 +89,21 @@ import ToastNotification from "@/components/ToastNotification";
 import Pictogram from "@/components/Pictogram";
 import ExclamationMark from "@/components/pictograms/ExclamationMark";
 import StorageService from "@/mixins/storage";
+import IconService from "@/mixins/icon";
 
 export default {
   name: "ShellHeader",
   components: {
+    Close20,
     Notification20,
-    NotificationNew20,
+    // NotificationNew20, ////
     UserAvatar20,
     AppSwitcher20,
     ToastNotification,
     Pictogram,
     ExclamationMark,
-    Close20, //// move to mixin
   },
-  mixins: [StorageService],
-  data() {
-    return {
-      Close20, //// move to mixin
-    };
-  },
+  mixins: [StorageService, IconService],
   computed: {
     ...mapState({
       showNotificationDrawer: (state) => state.showNotificationDrawer,
@@ -157,7 +157,7 @@ export default {
 
 .notifications-badge {
   position: absolute;
-  top: 12%;
+  top: 15%;
   left: 62%;
   height: 7px;
   width: 7px;
