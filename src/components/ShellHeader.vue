@@ -1,5 +1,10 @@
 <template>
-  <cv-header aria-label="Carbon tutorial">
+  <cv-header aria-label="header">
+    <cv-header-menu-button
+      aria-label="Header menu"
+      aria-controls="side-nav"
+      @click="toggleMobileSideMenu"
+    />
     <cv-skip-to-content href="#main-content"
       >Skip to content</cv-skip-to-content
     >
@@ -7,11 +12,36 @@
       $root.config.PRODUCT_NAME
     }}</cv-header-name>
     <cv-header-nav>
-      <cv-header-menu-item to="/tasks">Tasks</cv-header-menu-item>
-      <cv-header-menu-item to="/login">Login ////</cv-header-menu-item>
-      <cv-header-menu-item @click="logout">Logout ////</cv-header-menu-item>
+      <cv-header-menu-item to="/dashboard?testToggle=true&testInput=firstValue"
+        >Link 1</cv-header-menu-item
+      >
+      <cv-header-menu-item to="/dashboard?testInput=secondValue"
+        >Link 2</cv-header-menu-item
+      >
+      <!-- <cv-header-menu-item to="/dashboard?testToggle=true&testInput=firstValue"
+        >Dashboard w/p 1</cv-header-menu-item
+      >
+      <cv-header-menu-item to="/dashboard?testInput=secondValue"
+        >Dashboard w/p 2</cv-header-menu-item
+      > -->
+      <!--  //// -->
+      <!-- <cv-header-menu-item to="/tasks">Tasks</cv-header-menu-item>
+      <cv-header-menu-item to="/login">Login</cv-header-menu-item>
+      <cv-header-menu-item @click="logout">Logout</cv-header-menu-item>
+      <cv-header-menu-item to="/apps/ns8-app">Ns8 app</cv-header-menu-item>
+      <cv-header-menu-item to="/apps/ns8-app?appInput=testAppInput"
+        >Ns8 app w/p</cv-header-menu-item
+      > -->
     </cv-header-nav>
     <template slot="header-global">
+      <cv-header-global-action
+        v-if="!searchExpanded"
+        aria-label="Global search"
+        @click="expandSearch"
+      >
+        <search-20 />
+      </cv-header-global-action>
+      <GlobalSearch v-else @closeSearch="closeSearch" />
       <cv-header-global-action
         aria-label="Notifications"
         class="notifications-button"
@@ -26,13 +56,14 @@
           v-if="unreadNotificationsCount > 0"
         ></span>
       </cv-header-global-action>
-      <cv-header-global-action aria-label="User avatar">
+      <cv-header-global-action aria-label="Account">
         <user-avatar-20 />
       </cv-header-global-action>
-      <cv-header-global-action aria-label="App switcher">
+      <cv-header-global-action aria-label="Applications">
         <app-switcher-20 />
       </cv-header-global-action>
     </template>
+    <!-- //// move notification drawer to distinct component -->
     <transition name="slide">
       <div v-if="showNotificationDrawer" class="notification-drawer">
         <div class="notification-drawer__header">
@@ -48,29 +79,44 @@
             <Close20 class="bx--toast-notification__close-icon" />
           </button>
         </div>
-        <div v-if="!notifications.length">
-          <div class="empty-state">
-            <pictogram title="empty state" class="image">
-              <ExclamationMark />
-            </pictogram>
-            <h5 class="title">No notifications</h5>
-            <div class="description">You don't have any notifications yet</div>
-          </div>
-        </div>
-        <div v-else v-for="(notification, index) in notifications" :key="index">
-          <ToastNotification
-            :kind="notification.type"
-            :title="notification.title"
-            :sub-title="notification.text"
-            :low-contrast="false"
-            :show-close-button="false"
-            actionLabel="Details"
-            @action="notificationAction"
-            :read="notification.read"
-            :timestamp="notification.timestamp"
-            @click="setNotificationReadInStore(notification.id)"
-          />
-        </div>
+        <cv-tabs
+          class="notification-tabs"
+          aria-label="navigate between events and tasks"
+        >
+          <cv-tab id="events" label="Events" selected>
+            <div v-if="!notifications.length">
+              <div class="empty-state">
+                <pictogram title="empty state" class="image">
+                  <ExclamationMark />
+                </pictogram>
+                <h5 class="title">No notifications</h5>
+                <div class="description">
+                  You don't have any notifications yet
+                </div>
+              </div>
+            </div>
+            <div
+              v-else
+              v-for="(notification, index) in notifications"
+              :key="index"
+            >
+              <ToastNotification
+                :kind="notification.type"
+                :title="notification.title"
+                :sub-title="notification.text"
+                :low-contrast="false"
+                :show-close-button="false"
+                actionLabel="Details"
+                @action="notificationAction"
+                :read="notification.read"
+                :progress="notification.progress"
+                :timestamp="notification.timestamp"
+                @click="setNotificationReadInStore(notification.id)"
+              />
+            </div>
+          </cv-tab>
+          <cv-tab id="tasks" label="Tasks"> Sample tab panel content 2 </cv-tab>
+        </cv-tabs>
       </div>
     </transition>
   </cv-header>
@@ -88,6 +134,8 @@ import { mapGetters } from "vuex";
 import ToastNotification from "@/components/ToastNotification";
 import Pictogram from "@/components/Pictogram";
 import ExclamationMark from "@/components/pictograms/ExclamationMark";
+import GlobalSearch from "@/components/GlobalSearch";
+import Search20 from "@carbon/icons-vue/es/search/20";
 import StorageService from "@/mixins/storage";
 import IconService from "@/mixins/icon";
 
@@ -102,8 +150,16 @@ export default {
     ToastNotification,
     Pictogram,
     ExclamationMark,
+    Search20,
+    GlobalSearch,
   },
   mixins: [StorageService, IconService],
+  data() {
+    return {
+      searchExpanded: false,
+      // viewWidth: document.documentElement.clientWidth, //// remove?
+    };
+  },
   computed: {
     ...mapState({
       showNotificationDrawer: (state) => state.showNotificationDrawer,
@@ -111,6 +167,17 @@ export default {
     }),
     ...mapGetters(["unreadNotifications", "unreadNotificationsCount"]),
   },
+  // watch: { ////
+  //   viewWidth: function () {
+  //     console.log("viewWidth", this.viewWidth); ////
+  //   },
+  // },
+  // created() { ////
+  //   window.addEventListener("resize", this.handleViewResize);
+  // },
+  // beforeDestroy() { ////
+  //   window.removeEventListener("resize", this.handleViewResize);
+  // },
   methods: {
     ...mapActions([
       "setShowNotificationDrawerInStore",
@@ -128,6 +195,18 @@ export default {
     logout() {
       this.$root.$emit("logout");
     },
+    expandSearch() {
+      this.searchExpanded = true;
+    },
+    closeSearch() {
+      this.searchExpanded = false;
+    },
+    toggleMobileSideMenu() {
+      this.$root.$emit("toggleMobileSideMenu");
+    },
+    // handleViewResize() { ////
+    //   this.viewWidth = document.documentElement.clientWidth;
+    // },
   },
 };
 </script>
@@ -139,8 +218,7 @@ export default {
   background-color: $ui-05;
   border-left: 1px solid $interactive-02;
   color: $ui-01;
-  height: 10rem;
-  width: 28vw;
+  width: 28vw; //// fixed to 16rem?
   min-width: 23rem;
   height: calc(100vh - 3rem);
   position: fixed;
@@ -166,12 +244,12 @@ export default {
   display: inline-block;
 }
 
-.slide-enter-active,
+.slide-enter-active, //// move to App.vue?
 .slide-leave-active {
   transition: all 0.3s ease;
 }
 
-.slide-enter,
+.slide-enter, //// move to App.vue?
 .slide-leave-to {
   transform: translateX(30vw);
 }
@@ -188,5 +266,9 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+}
+
+.notification-tabs {
+  margin-top: $spacing-05;
 }
 </style>

@@ -32,6 +32,11 @@ export default {
         notification.timestamp = now;
       }
 
+      ////
+      if (!notification.progress) {
+        notification.progress = 75;
+      }
+
       // create notification in vuex store
       this.createNotificationInStore(notification);
 
@@ -42,6 +47,7 @@ export default {
           kind: notification.type,
           title: notification.title,
           subTitle: notification.text,
+          progress: notification.progress,
           actionLabel: "Details", ////
           lowContrast: false,
           showCloseButton: true,

@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "watch": "vue-cli-service build --watch"
   },
   "dependencies": {
     "@carbon/charts-vue": "^0.41.62",
@@ -21,6 +22,7 @@
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
     "vue-date-fns": "^2.0.1",
+    "vue-fragment": "^1.5.2",
     "vue-native-websocket": "^2.0.14",
     "vue-router": "^3.2.0",
     "vue-toastification": "^1.7.11",

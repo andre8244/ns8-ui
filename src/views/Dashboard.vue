@@ -32,6 +32,25 @@
     <div class="bx--row">
       <div class="bx--col-md-4">
         <div class="mg-top-bottom">
+          <cv-text-input label="Label" v-model="testInput"> </cv-text-input>
+          <cv-toggle value="check-test" v-model="testToggle"> </cv-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="bx--row">
+      <div class="bx--col-md-4">
+        <div class="mg-top-bottom">
+          <cv-overflow-menu label="Overflow menu">
+            <span slot="trigger">asdf</span>
+            <cv-overflow-menu-item primary-focus
+              >list item 1</cv-overflow-menu-item
+            >
+            <cv-overflow-menu-item disabled>list item 2</cv-overflow-menu-item>
+            <cv-overflow-menu-item danger>list item 3</cv-overflow-menu-item>
+          </cv-overflow-menu>
+        </div>
+
+        <div class="mg-top-bottom">
           <cv-icon-button
             kind="secondary"
             :icon="Flash16"
@@ -186,6 +205,8 @@ export default {
       formatRelative, //// use mixin
       subDays,
       formatDistance,
+      testInput: "",
+      testToggle: false,
     };
   },
   computed: {
@@ -195,7 +216,53 @@ export default {
       return this.$date(new Date());
     },
   },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      console.log("beforeRouteEnter", to, from); ////
+      vm.queryParamsToData(vm, to.query);
+    });
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log("beforeRouteUpdate", to, from); ////
+    this.queryParamsToData(this, to.query);
+    next();
+  },
+  watch: {
+    testInput: function () {
+      if (this.testInput !== this.$route.query.testInput) {
+        this.$router.replace({
+          query: { ...this.$route.query, testInput: this.testInput },
+        });
+      }
+    },
+    testToggle: function () {
+      console.log("watch testToggle", this.testToggle); ////
+
+      const booleanQueryTestToggle = this.$route.query.testToggle == "true";
+
+      if (this.testToggle !== booleanQueryTestToggle) {
+        this.$router.replace({
+          query: { ...this.$route.query, testToggle: this.testToggle },
+        });
+      }
+    },
+  },
   methods: {
+    queryParamsToData(context, queryParams) {
+      console.log("query params", queryParams); ////
+
+      if (queryParams.testInput) {
+        context.testInput = queryParams.testInput;
+      } else {
+        context.testInput = "";
+      }
+
+      if (queryParams.testToggle) {
+        context.testToggle = queryParams.testToggle === "true";
+      } else {
+        context.testToggle = false;
+      }
+    },
     closeToast() {
       console.log("closeToast"); ////
     },

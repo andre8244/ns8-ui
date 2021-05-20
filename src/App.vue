@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <shell-header />
+    <ShellHeader />
+    <SideMenu />
+    <MobileSideMenu />
     <cv-content id="#main-content">
       <router-view />
     </cv-content>
@@ -9,6 +11,8 @@
 
 <script>
 import ShellHeader from "./components/ShellHeader";
+import SideMenu from "./components/SideMenu";
+import MobileSideMenu from "./components/MobileSideMenu";
 import axios from "axios";
 import StorageService from "@/mixins/storage";
 import WebSocketService from "@/mixins/websocket";
@@ -17,6 +21,8 @@ export default {
   name: "App",
   components: {
     ShellHeader,
+    SideMenu,
+    MobileSideMenu,
   },
   mixins: [StorageService, WebSocketService],
   created() {
@@ -63,6 +69,7 @@ export default {
 
 <style lang="scss">
 @import "./styles/carbon";
+@import "./styles/carbon-utils";
 
 a {
   cursor: pointer;
@@ -81,6 +88,7 @@ a {
   margin-bottom: $spacing-05 !important;
 }
 
+// vue-toastification
 .Vue-Toastification__container.top-right.toastification-container {
   top: 3rem;
   z-index: 7999;
@@ -91,6 +99,7 @@ a {
   padding: 0;
   margin-bottom: 0;
 }
+// end vue-toastification
 
 .page-title {
   margin-top: $spacing-07;
@@ -104,7 +113,7 @@ a {
 
 .empty-state {
   text-align: center;
-  margin: $spacing-09;
+  padding: $spacing-09;
 }
 
 .empty-state .image {
@@ -126,5 +135,140 @@ a {
 .timestamp
   .bx--tooltip__trigger.bx--tooltip--bottom.bx--tooltip--align-center::before {
   border-bottom-color: $ui-05 !important;
+}
+
+.notification-drawer a.bx--tabs__nav-link {
+  color: $ui-01 !important;
+}
+
+.notification-drawer
+  .bx--tabs__nav-item--selected:not(.bx--tabs__nav-item--disabled)
+  .bx--tabs__nav-link,
+.notification-drawer
+  .bx--tabs__nav-item--selected:not(.bx--tabs__nav-item--disabled)
+  .bx--tabs__nav-link:focus,
+.notification-drawer
+  .bx--tabs__nav-item--selected:not(.bx--tabs__nav-item--disabled)
+  .bx--tabs__nav-link:active {
+  border-bottom: 2px solid #4589ff !important;
+}
+
+.notification-drawer a.bx--tabs__nav-link:focus,
+.notification-drawer a.bx--tabs__nav-link:active {
+  outline: 2px solid #4589ff !important;
+}
+
+.cv-tabs__panels {
+  margin-top: $spacing-05;
+}
+
+// global search
+.global-search input {
+  background-color: $ui-05 !important;
+  color: $ui-01 !important;
+}
+
+.global-search input:focus,
+.global-search input:active {
+  outline: 2px solid #4589ff !important;
+}
+
+.global-search label {
+  display: none;
+}
+
+.global-search .search-results .bx--structured-list-td,
+.global-search .search-results .empty-state {
+  background-color: $ui-05 !important;
+  color: $ui-01 !important;
+}
+
+.global-search
+  .bx--structured-list.bx--structured-list--condensed
+  .bx--structured-list-td,
+.global-search
+  .bx--structured-list.bx--structured-list--condensed
+  .bx--structured-list-th {
+  padding: $spacing-05 !important;
+}
+
+.global-search .bx--structured-list-row {
+  border-color: #393939;
+}
+// end global search
+
+// side menu
+.bx--side-nav {
+  background-color: $ui-05;
+  color: $ui-01;
+}
+
+.bx--side-nav__submenu {
+  color: $ui-01;
+}
+
+a.bx--side-nav__link > .bx--side-nav__link-text,
+.bx--side-nav a.bx--header__menu-item .bx--text-truncate-end {
+  color: $ui-01;
+}
+
+.bx--side-nav__menu a.bx--side-nav__link--current > span,
+.bx--side-nav__menu a.bx--side-nav__link[aria-current="page"] > span,
+a.bx--side-nav__link--current > span {
+  color: $ui-01;
+}
+
+.bx--side-nav__icon > svg {
+  width: 20px;
+  height: 20px;
+  fill: $ui-01;
+}
+
+.bx--side-nav__menu a.bx--side-nav__link--current,
+.bx--side-nav__menu a.bx--side-nav__link[aria-current="page"],
+a.bx--side-nav__link--current {
+  background-color: $interactive-02;
+}
+
+.bx--side-nav__submenu:hover {
+  color: $ui-01;
+  background-color: $interactive-02;
+}
+
+.bx--side-nav__item:not(.bx--side-nav__item--active):hover
+  .bx--side-nav__item:not(.bx--side-nav__item--active)
+  > .bx--side-nav__submenu:hover,
+.bx--side-nav__item:not(.bx--side-nav__item--active)
+  > .bx--side-nav__link:hover,
+.bx--side-nav__menu
+  a.bx--side-nav__link:not(.bx--side-nav__link--current):not([aria-current="page"]):hover,
+.bx--side-nav a.bx--header__menu-item:hover,
+.bx--side-nav .bx--header__menu-title[aria-expanded="true"]:hover {
+  color: $ui-01;
+  background-color: $interactive-02;
+}
+
+.bx--side-nav__item:not(.bx--side-nav__item--active)
+  > .bx--side-nav__link:hover
+  > span,
+.bx--side-nav__item:not(.bx--side-nav__item--active)
+  .bx--side-nav__menu-item
+  > .bx--side-nav__link:hover
+  > span {
+  color: $ui-01;
+}
+
+a.bx--side-nav__link[aria-current="page"]::before,
+a.bx--side-nav__link--current::before {
+  background-color: $inverse-support-04;
+}
+// end side menu
+
+// styles for small devices
+@media (max-width: $breakpoint-large) {
+  // remove left margin because side menu is not shown
+  .bx--content {
+    margin-left: 0 !important;
+  }
 }
 </style>

@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import Login from "../views/Login.vue";
 import Tasks from "../views/Tasks.vue";
+import Applications from "../views/Applications.vue";
 
 Vue.use(VueRouter);
 
@@ -23,10 +24,15 @@ const routes = [
     name: "Tasks",
     component: Tasks,
   },
+  {
+    path: "/apps/:appId",
+    name: "Applications",
+    component: Applications,
+  },
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  // mode: "history", //// verify
   base: process.env.BASE_URL,
   routes,
 });

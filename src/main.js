@@ -17,13 +17,16 @@ import VueAxios from "vue-axios";
 Vue.use(VueAxios, axios);
 
 import VueNativeSock from "vue-native-websocket";
-////
 Vue.use(VueNativeSock, "ws://", {
   format: "json",
   reconnection: true,
   reconnectionDelay: 3000,
   connectManually: true,
 });
+
+//// remove?
+import Fragment from "vue-fragment";
+Vue.use(Fragment.Plugin);
 
 //// move somewhere else?
 const toastOptions = {
@@ -33,8 +36,24 @@ const toastOptions = {
   icon: false,
   closeButton: false,
 };
-
 Vue.use(Toast, toastOptions);
+
+// enable v-click-outside directive
+Vue.directive("click-outside", {
+  bind: function (el, binding, vnode) {
+    el.clickOutsideEvent = function (event) {
+      // check if click was outside the el and his children
+      if (!(el == event.target || el.contains(event.target))) {
+        // call method provided in attribute value
+        vnode.context[binding.expression](event);
+      }
+    };
+    document.body.addEventListener("click", el.clickOutsideEvent);
+  },
+  unbind: function (el) {
+    document.body.removeEventListener("click", el.clickOutsideEvent);
+  },
+});
 
 Vue.config.productionTip = false;
 

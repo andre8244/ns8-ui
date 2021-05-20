@@ -28,6 +28,7 @@
           ]"
           v-html="subTitle"
         ></p>
+        <p v-if="progress" class="progress">{{ progress }} %</p>
         <p
           v-if="actionLabel"
           :class="[`${carbonPrefix}--toast-notification__caption`, `action`]"
@@ -86,6 +87,9 @@ export default {
       default: function () {
         return false;
       },
+    },
+    progress: {
+      type: Number,
     },
     timestamp: {
       type: Date,

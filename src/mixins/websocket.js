@@ -7,6 +7,7 @@ export default {
     initWebSocket() {
       this.$connect(this.$root.config.WS_ENDPOINT);
       this.$options.sockets.onmessage = this.onMessage;
+      console.log("websocket connected"); ////
     },
     closeWebSocket() {
       this.$disconnect();
@@ -24,6 +25,7 @@ export default {
           title: messageData.name,
           text: "Progress description: " + payload.progress + "%",
           type: "info",
+          progress: payload.progress,
           timestamp: payload.timestamp,
         };
         this.putNotification(notification);
