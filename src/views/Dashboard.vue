@@ -2,7 +2,7 @@
   <div class="bx--grid bx--grid--full-width">
     <div class="bx--row">
       <div class="bx--col-lg-16">
-        <h1 class="page-title">Dashboard</h1>
+        <h1 class="page-title">Cluster dashboard</h1>
       </div>
     </div>
     <div class="bx--row">
@@ -19,7 +19,7 @@
         </cv-tile>
       </div>
     </div>
-    <div class="bx--row">
+    <!-- <div class="bx--row">
       <div class="bx--col-md-4 bx--col-lg-7">7/16</div>
       <div class="bx--col-md-4 bx--offset-lg-1 bx--col-lg-8">8/16</div>
     </div>
@@ -28,29 +28,59 @@
       <div class="bx--col-md-4 bx--col-lg-4">1/4</div>
       <div class="bx--col-md-4 bx--col-lg-4">1/4</div>
       <div class="bx--col-md-4 bx--col-lg-4">1/4</div>
-    </div>
+    </div> -->
     <div class="bx--row">
       <div class="bx--col-md-4">
-        <div class="mg-top-bottom">
+        <cv-tile :light="true" class="content-tile">
           <cv-text-input label="Label" v-model="testInput"> </cv-text-input>
           <cv-toggle value="check-test" v-model="testToggle"> </cv-toggle>
-        </div>
+          <div class="mg-top-bottom">
+            <cv-button kind="" :icon="Flash16" @click="createInfoToast">
+              Create info toast
+            </cv-button>
+          </div>
+
+          <div class="mg-top-bottom">
+            <cv-button
+              kind="primary"
+              :icon="Flash16"
+              @click="createSuccessToast"
+            >
+              Create success toast
+            </cv-button>
+          </div>
+
+          <div class="mg-top-bottom">
+            <cv-button
+              kind="secondary"
+              :icon="Flash16"
+              @click="createWarningToast"
+            >
+              Create warning toast
+            </cv-button>
+          </div>
+
+          <div class="mg-top-bottom">
+            <cv-button kind="danger" :icon="Flash16" @click="createErrorToast">
+              Create error toast
+            </cv-button>
+          </div>
+
+          <!-- <div class="mg-top-bottom"> ////
+            <cv-button
+              kind="secondary"
+              :icon="Flash16"
+              @click="createTaskNotification"
+            >
+              Create task notification
+            </cv-button>
+          </div> -->
+        </cv-tile>
       </div>
     </div>
     <div class="bx--row">
       <div class="bx--col-md-4">
-        <div class="mg-top-bottom">
-          <cv-overflow-menu label="Overflow menu">
-            <span slot="trigger">asdf</span>
-            <cv-overflow-menu-item primary-focus
-              >list item 1</cv-overflow-menu-item
-            >
-            <cv-overflow-menu-item disabled>list item 2</cv-overflow-menu-item>
-            <cv-overflow-menu-item danger>list item 3</cv-overflow-menu-item>
-          </cv-overflow-menu>
-        </div>
-
-        <div class="mg-top-bottom">
+        <!-- <div class="mg-top-bottom">
           <cv-icon-button
             kind="secondary"
             :icon="Flash16"
@@ -58,37 +88,9 @@
             tip-position="bottom"
             tip-alignment="center"
           />
-        </div>
+        </div> -->
 
-        <div class="mg-top-bottom">
-          <cv-button kind="" :icon="Flash16" @click="createInfoToast">
-            Create info toast
-          </cv-button>
-        </div>
-
-        <div class="mg-top-bottom">
-          <cv-button kind="primary" :icon="Flash16" @click="createSuccessToast">
-            Create success toast
-          </cv-button>
-        </div>
-
-        <div class="mg-top-bottom">
-          <cv-button
-            kind="secondary"
-            :icon="Flash16"
-            @click="createWarningToast"
-          >
-            Create warning toast
-          </cv-button>
-        </div>
-
-        <div class="mg-top-bottom">
-          <cv-button kind="danger" :icon="Flash16" @click="createErrorToast">
-            Create error toast
-          </cv-button>
-        </div>
-
-        <pictogram width="48" height="48" title="gear">
+        <!-- <pictogram width="48" height="48" title="gear">
           <gear />
         </pictogram>
 
@@ -107,22 +109,22 @@
               })
             }}
           </div>
-        </div>
+        </div> -->
 
-        <div class="mg-top-bottom">
+        <!-- <div class="mg-top-bottom">
           <cv-code-snippet :light="true">{{ snippet }}</cv-code-snippet>
-        </div>
+        </div> -->
 
-        <div class="mg-top-bottom">
+        <!-- <div class="mg-top-bottom">
           <cv-date-picker kind="single" value="01/01/2020"></cv-date-picker>
         </div>
 
         <div class="mg-top-bottom">
           <cv-tag kind="blue" label="I am a tag"></cv-tag>
-        </div>
+        </div> -->
       </div>
     </div>
-    <div class="bx--row">
+    <!-- <div class="bx--row">
       <div class="bx--col-md-4">
         <div class="mg-top-bottom">
           <cv-tile :light="true">
@@ -175,23 +177,23 @@
           <AreaChart />
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import AreaChart from "@/components/AreaChart";
+// import AreaChart from "@/components/AreaChart"; ////
 import Flash16 from "@carbon/icons-vue/es/flash/16";
-import Filter16 from "@carbon/icons-vue/es/filter/16";
+// import Filter16 from "@carbon/icons-vue/es/filter/16"; ////
 import { mapState } from "vuex";
 import NotificationService from "@/mixins/notification";
-import Pictogram from "@/components/Pictogram";
-import Gear from "@/components/pictograms/Gear";
+// import Pictogram from "@/components/Pictogram";
+// import Gear from "@/components/pictograms/Gear";
 import { formatRelative, formatDistance, subDays } from "date-fns";
 
 export default {
   name: "Dashboard",
-  components: { AreaChart, Filter16, Pictogram, Gear },
+  components: {},
   mixins: [NotificationService],
   data() {
     return {
@@ -299,6 +301,17 @@ export default {
         text: "Cannot retrieve cluster info. Check your connection",
         type: "error",
         app: "Cluster manager",
+      };
+      this.createNotification(notification);
+    },
+    createTaskNotification() {
+      const notification = {
+        title: "Installing Nextcloud",
+        text: "Configuring...",
+        type: "info",
+        app: "Cluster manager",
+        isTask: true,
+        progress: 0,
       };
       this.createNotification(notification);
     },

@@ -16,7 +16,7 @@
           <div class="description">Try changing your search query</div>
         </div>
       </div>
-      <cv-structured-list v-else condensed>
+      <cv-structured-list v-else>
         <template slot="items">
           <cv-structured-list-item
             v-for="(result, index) in results"
@@ -82,8 +82,8 @@ export default {
         },
         {
           category: "System",
-          name: "Dashboard",
-          description: "NS8 Dashboard description",
+          name: "Cluster dashboard",
+          description: "Monitor cluster status",
           tags: "monitor,status",
         },
         {
@@ -169,6 +169,13 @@ export default {
   width: 100%;
   background-color: $ui-05;
   color: $ui-01;
+}
+
+.global-search .search-results {
+  // border-left: 1px solid $interactive-02; ////
+  // border-right: 1px solid $interactive-02;
+  // border-bottom: 1px solid $interactive-02;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
 }
 
 .search-result-column {

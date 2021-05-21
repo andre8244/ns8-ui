@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide">
+  <transition name="slide-menu">
     <div
       v-if="isMenuShown"
       class="mobile-side-menu cv-side-nav bx--side-nav bx--side-nav__navigation bx--side-nav--expanded"
@@ -59,7 +59,7 @@ export default {
   // border-left: 1px solid $interactive-02; ////
   // color: $ui-01; ////
   // height: 10rem; ////
-  width: 16rem;
+  width: $side-menu-width;
   // min-width: 23rem; ////
   height: calc(100vh - 3rem);
   position: fixed;
@@ -70,13 +70,13 @@ export default {
   // padding: 1rem; ////
 }
 
-.slide-enter-active, //// move to App.vue?
-.slide-leave-active {
+.slide-menu-enter-active,
+.slide-menu-leave-active {
   transition: all 0.3s ease;
 }
 
-.slide-enter, //// move to App.vue?
-.slide-leave-to {
-  transform: translateX(-30vw);
+.slide-menu-enter,
+.slide-menu-leave-to {
+  transform: translateX(-$side-menu-width);
 }
 </style>

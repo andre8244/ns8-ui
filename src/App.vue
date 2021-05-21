@@ -3,7 +3,7 @@
     <ShellHeader />
     <SideMenu />
     <MobileSideMenu />
-    <cv-content id="#main-content">
+    <cv-content id="main-content">
       <router-view />
     </cv-content>
   </div>
@@ -71,8 +71,29 @@ export default {
 @import "./styles/carbon";
 @import "./styles/carbon-utils";
 
+body {
+  height: calc(100vh - 3rem);
+}
+
+#app {
+  height: 100%;
+}
+
+////
+#main-content {
+  height: 100%;
+}
+
 a {
   cursor: pointer;
+}
+
+.bx--link {
+  text-decoration: underline;
+}
+
+.bx--link:hover {
+  color: $link-02;
 }
 
 .notification {
@@ -137,10 +158,12 @@ a {
   border-bottom-color: $ui-05 !important;
 }
 
+//// remove?
 .notification-drawer a.bx--tabs__nav-link {
   color: $ui-01 !important;
 }
 
+//// remove?
 .notification-drawer
   .bx--tabs__nav-item--selected:not(.bx--tabs__nav-item--disabled)
   .bx--tabs__nav-link,
@@ -153,11 +176,13 @@ a {
   border-bottom: 2px solid #4589ff !important;
 }
 
+//// remove?
 .notification-drawer a.bx--tabs__nav-link:focus,
 .notification-drawer a.bx--tabs__nav-link:active {
   outline: 2px solid #4589ff !important;
 }
 
+//// remove?
 .cv-tabs__panels {
   margin-top: $spacing-05;
 }
@@ -166,6 +191,7 @@ a {
 .global-search input {
   background-color: $ui-05 !important;
   color: $ui-01 !important;
+  margin-top: 3px; //// fix
 }
 
 .global-search input:focus,
@@ -175,6 +201,10 @@ a {
 
 .global-search label {
   display: none;
+}
+
+.global-search .bx--structured-list {
+  margin-bottom: 0;
 }
 
 .global-search .search-results .bx--structured-list-td,
@@ -262,7 +292,45 @@ a.bx--side-nav__link[aria-current="page"]::before,
 a.bx--side-nav__link--current::before {
   background-color: $inverse-support-04;
 }
+
+.bx--side-nav__submenu {
+  height: 3rem;
+}
+
+.cv-side-nav-item-link.bx--side-nav__link {
+  height: 3rem;
+}
 // end side menu
+
+// app drawer
+.app-drawer .bx--structured-list-td,
+.app-drawer .empty-state {
+  background-color: $ui-05 !important;
+  color: $ui-01 !important;
+}
+
+.app-drawer
+  .bx--structured-list.bx--structured-list--condensed
+  .bx--structured-list-td,
+.app-drawer
+  .bx--structured-list.bx--structured-list--condensed
+  .bx--structured-list-th {
+  padding: $spacing-05 !important;
+}
+
+.app-drawer .bx--structured-list-row {
+  border-color: #393939;
+}
+
+.app-drawer .bx--structured-list {
+  margin-bottom: 0;
+}
+// end app drawer
+
+.status a.bx--header__menu-item[aria-current="page"]::after,
+.bx--header__menu-item--current::after {
+  border-bottom: none;
+}
 
 // styles for small devices
 @media (max-width: $breakpoint-large) {

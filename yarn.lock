@@ -929,6 +929,11 @@
   resolved "https://registry.yarnpkg.com/@carbon/colors/-/colors-10.15.0.tgz#1a7f211a9e92b51c838995f5f3ffae002a3fed8b"
   integrity sha512-z6Ur7unTO6XoVVujXnGcvxxDaX1g5ccCqImlb/HtJHtF7WFCQVjpxKKn76XcmI3PRZ2tbc9q+ENpfbS5Ry/NBQ==
 
+"@carbon/colors@^10.25.0":
+  version "10.25.0"
+  resolved "https://registry.yarnpkg.com/@carbon/colors/-/colors-10.25.0.tgz#b61083fb4dd1143a018696027b21efde405291fc"
+  integrity sha512-hWohoWPVUfnyYqzjdgL97ksS5LtUckNYyWCOOGPYraVytxIb0nUCXp/2GTg5Eh8YZwJepht1iEZrGP2d2Zfo5A==
+
 "@carbon/grid@^10.26.0":
   version "10.26.0"
   resolved "https://registry.yarnpkg.com/@carbon/grid/-/grid-10.26.0.tgz#5c61b039b27170b4fa6ef2f91e00de8e678d0125"
@@ -966,6 +971,11 @@
   resolved "https://registry.yarnpkg.com/@carbon/layout/-/layout-10.23.0.tgz#7af99758abc780d1509ab109b0491bdd19623e9f"
   integrity sha512-oO7okc7c7QPWpC0k6DeZFG219DWv4ioMYtgZ189rH81e8bjKIwc5uJh63uSZ9ITMI9+pvDu6hXaiHYIGsLza3w==
 
+"@carbon/layout@^10.24.0":
+  version "10.24.0"
+  resolved "https://registry.yarnpkg.com/@carbon/layout/-/layout-10.24.0.tgz#d6ec2a5ce310ceac39ba1a396681ceaf161407bc"
+  integrity sha512-GuxBdeoqlJ29p42JzCEpe1qr8LHw8Joah5xErx7ieb3WzPu0VY7XCbsXqlT1BI4zv40YBc/gY8a+Au+cUAS5fQ==
+
 "@carbon/telemetry@0.0.0-alpha.6", "@carbon/telemetry@^0.0.0-alpha.6":
   version "0.0.0-alpha.6"
   resolved "https://registry.yarnpkg.com/@carbon/telemetry/-/telemetry-0.0.0-alpha.6.tgz#1d11e64f310e98f32c3db0c55f02e047f2398087"
@@ -981,6 +991,24 @@
     semver "^7.3.2"
     winston "^3.3.3"
     yargs "^16.1.1"
+
+"@carbon/themes@^10.34.0":
+  version "10.34.0"
+  resolved "https://registry.yarnpkg.com/@carbon/themes/-/themes-10.34.0.tgz#9cf62a8086faa6ef7c5b48440e1253ef0e8d328d"
+  integrity sha512-VMHmahPE9VS7CH5UQHQ7iOY7cKYcrAhE4mkZ3/aLy8jd+gIviCGHf1JYXvOu0dZSogD9C1vzumye9pTzjXzL0A==
+  dependencies:
+    "@carbon/colors" "^10.25.0"
+    "@carbon/layout" "^10.24.0"
+    "@carbon/type" "^10.28.0"
+    color "^3.1.2"
+
+"@carbon/type@^10.28.0":
+  version "10.28.0"
+  resolved "https://registry.yarnpkg.com/@carbon/type/-/type-10.28.0.tgz#4e83d53610f5ec848d151e69257adef5eae5e2aa"
+  integrity sha512-a2YQDCeCBlqPWcrbnDi4B7w5VKLNDVu0mFEE0uZazztUgQu7CyuxdfsUlC75xZmEtHVbCNwKEzVWUOSl5Yc/4Q==
+  dependencies:
+    "@carbon/import-once" "^10.6.0"
+    "@carbon/layout" "^10.24.0"
 
 "@carbon/utils-position@1.1.1":
   version "1.1.1"
@@ -2819,7 +2847,7 @@ color@3.0.x:
     color-convert "^1.9.1"
     color-string "^1.5.2"
 
-color@^3.0.0:
+color@^3.0.0, color@^3.1.2:
   version "3.1.3"
   resolved "https://registry.npm.taobao.org/color/download/color-3.1.3.tgz#ca67fb4e7b97d611dcde39eceed422067d91596e"
   integrity sha1-ymf7TnuX1hHc3jns7tQiBn2RWW4=

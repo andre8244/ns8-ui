@@ -33,9 +33,9 @@ export default {
       }
 
       ////
-      if (!notification.progress) {
-        notification.progress = 75;
-      }
+      // if (!notification.progress) {
+      //   notification.progress = 75;
+      // }
 
       // create notification in vuex store
       this.createNotificationInStore(notification);
@@ -47,6 +47,7 @@ export default {
           kind: notification.type,
           title: notification.title,
           subTitle: notification.text,
+          isTask: notification.isTask,
           progress: notification.progress,
           actionLabel: "Details", ////
           lowContrast: false,

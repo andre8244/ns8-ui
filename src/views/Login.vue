@@ -169,6 +169,7 @@ export default {
       this.username = "";
       this.password = "";
       this.focusUsername();
+      this.error.login = "";
     },
     focusUsername() {
       // focus on username field

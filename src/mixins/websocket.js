@@ -22,9 +22,10 @@ export default {
 
         const notification = {
           id: messageData.name,
-          title: messageData.name,
-          text: "Progress description: " + payload.progress + "%",
+          title: payload.title,
+          text: payload.text,
           type: "info",
+          isTask: true,
           progress: payload.progress,
           timestamp: payload.timestamp,
         };

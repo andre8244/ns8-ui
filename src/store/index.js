@@ -11,10 +11,18 @@ export default new Vuex.Store({
   },
   getters: {
     unreadNotifications: (state) => {
-      return state.notifications.filter((notification) => !notification.read);
+      return state.notifications.filter(
+        (notification) => !notification.read && !notification.isTask
+      );
     },
     unreadNotificationsCount: (state, getters) => {
       return getters.unreadNotifications.length;
+    },
+    ongoingNotifications: (state) => {
+      return state.notifications.filter((notification) => notification.isTask);
+    },
+    recentNotifications: (state) => {
+      return state.notifications.filter((notification) => !notification.isTask);
     },
   },
   mutations: {

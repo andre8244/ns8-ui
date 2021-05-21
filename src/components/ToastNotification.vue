@@ -26,9 +26,11 @@
             `${carbonPrefix}--toast-notification__subtitle`,
             `notification-text`,
           ]"
-          v-html="subTitle"
-        ></p>
-        <p v-if="progress" class="progress">{{ progress }} %</p>
+        >
+          <span v-if="isTask" class="progress">{{ progress }} % </span
+          ><span v-html="subTitle"></span>
+        </p>
+        <!-- <p v-if="isTask" class="progress">{{ progress }} %</p> -->
         <p
           v-if="actionLabel"
           :class="[`${carbonPrefix}--toast-notification__caption`, `action`]"
@@ -82,7 +84,14 @@ export default {
       },
     },
     actionLabel: { type: String, default: "" },
+    //// rename to isRead
     read: {
+      type: Boolean,
+      default: function () {
+        return false;
+      },
+    },
+    isTask: {
       type: Boolean,
       default: function () {
         return false;
@@ -119,6 +128,10 @@ export default {
 .notification-text {
   margin-top: $spacing-03;
   margin-bottom: $spacing-04;
+}
+
+.progress {
+  margin-right: $spacing-03;
 }
 
 .cv-notifiation.bx--toast-notification.notification {
