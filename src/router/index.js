@@ -40,10 +40,10 @@ const router = new VueRouter({
 // go to login page if there is no auth token in local storage
 router.beforeEach((to, from, next) => {
   let isAuthenticated = false;
-  const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+  const loginInfo = JSON.parse(localStorage.getItem("loginInfo"));
 
   // (token expiration is checked only when invoking server API)
-  if (loggedUser && loggedUser.token) {
+  if (loginInfo && loginInfo.token) {
     isAuthenticated = true;
   }
 

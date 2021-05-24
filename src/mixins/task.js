@@ -10,8 +10,8 @@ export default {
   },
   methods: {
     getClusterTasks() {
-      const token = this.getFromStorage("loggedUser")
-        ? this.getFromStorage("loggedUser").token
+      const token = this.getFromStorage("loginInfo")
+        ? this.getFromStorage("loginInfo").token
         : "";
       return this.axios.get(this.apiUrl + "/tasks/cluster", {
         headers: {

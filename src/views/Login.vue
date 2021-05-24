@@ -82,6 +82,8 @@ import LoginService from "@/mixins/login";
 import StorageService from "@/mixins/storage";
 import InlineNotification from "@/components/InlineNotification";
 import UtilService from "@/mixins/util";
+import { mapState } from "vuex";
+import { mapActions } from "vuex";
 
 import to from "await-to-js";
 
@@ -102,10 +104,15 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState(["loggedUser"]),
+  },
   mounted() {
+    console.log("mounted login page"); ////
     this.focusUsername();
   },
   methods: {
+    ...mapActions(["setLoggedUserInStore"]),
     checkUsername() {
       this.error.username = "";
 
@@ -134,12 +141,13 @@ export default {
           return;
         }
 
-        const loggedUser = {
+        const loginInfo = {
           username: this.username,
           token: response.data.token,
         };
 
-        this.saveToStorage("loggedUser", loggedUser);
+        this.saveToStorage("loginInfo", loginInfo);
+        this.setLoggedUserInStore(this.username);
 
         if (this.$route.name !== "Dashboard") {
           this.$router.push("dashboard");

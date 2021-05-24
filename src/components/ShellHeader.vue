@@ -73,7 +73,7 @@
     <AppDrawer :isShown="isAppDrawerShown" />
     <!-- //// move notification drawer to distinct component -->
     <transition name="slide-notifications">
-      <div v-if="showNotificationDrawer" class="notification-drawer">
+      <div v-if="isNotificationDrawerShown" class="notification-drawer">
         <div class="notification-drawer__header">
           <h4>Notifications</h4>
           <span>{{ unreadNotificationsCount }} unread</span>
@@ -190,10 +190,7 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      showNotificationDrawer: (state) => state.showNotificationDrawer,
-      notifications: (state) => state.notifications,
-    }),
+    ...mapState(["isNotificationDrawerShown", "notifications"]),
     ...mapGetters([
       "unreadNotifications",
       "unreadNotificationsCount",
@@ -214,15 +211,15 @@ export default {
   // },
   methods: {
     ...mapActions([
-      "setShowNotificationDrawerInStore",
+      "setIsNotificationDrawerShownInStore",
       "setNotificationReadInStore",
     ]),
     toggleNotificationDrawer() {
       //// need to set in store?
-      this.setShowNotificationDrawerInStore(!this.showNotificationDrawer);
+      this.setIsNotificationDrawerShownInStore(!this.isNotificationDrawerShown);
     },
     closeDrawer() {
-      this.setShowNotificationDrawerInStore(false);
+      this.setIsNotificationDrawerShownInStore(false);
     },
     notificationAction() {
       console.log("notificationAction"); ////
@@ -335,6 +332,7 @@ export default {
   margin: $spacing-07 $spacing-05 $spacing-03;
   padding-bottom: $spacing-02;
   border-bottom: 1px solid $text-02;
+  color: $active-ui;
 }
 
 .notification-divider span {

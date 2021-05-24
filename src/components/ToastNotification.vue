@@ -163,6 +163,6 @@ export default {
 
 .timestamp button {
   @include carbon--type-style("body-short-01");
-  color: $ui-04;
+  color: $active-ui;
 }
 </style>

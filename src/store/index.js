@@ -7,7 +7,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     notifications: [],
-    showNotificationDrawer: false,
+    isNotificationDrawerShown: false,
+    loggedUser: "",
   },
   getters: {
     unreadNotifications: (state) => {
@@ -29,8 +30,8 @@ export default new Vuex.Store({
     createNotification(state, notification) {
       state.notifications.unshift(notification);
     },
-    setShowNotificationDrawer(state, value) {
-      state.showNotificationDrawer = value;
+    setIsNotificationDrawerShown(state, value) {
+      state.isNotificationDrawerShown = value;
     },
     setNotificationRead(state, notificationId) {
       const notification = state.notifications.find(
@@ -54,19 +55,25 @@ export default new Vuex.Store({
         console.log("updated notification", notificationFound); ////
       }
     },
+    setLoggedUser(state, username) {
+      state.loggedUser = username;
+    },
   },
   actions: {
     createNotificationInStore(context, notification) {
       context.commit("createNotification", notification);
     },
-    setShowNotificationDrawerInStore(context, value) {
-      context.commit("setShowNotificationDrawer", value);
+    setIsNotificationDrawerShownInStore(context, value) {
+      context.commit("setIsNotificationDrawerShown", value);
     },
     setNotificationReadInStore(context, notificationId) {
       context.commit("setNotificationRead", notificationId);
     },
     updateNotificationInStore(context, notification) {
       context.commit("updateNotification", notification);
+    },
+    setLoggedUserInStore(context, username) {
+      context.commit("setLoggedUser", username);
     },
   },
   modules: {},

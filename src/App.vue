@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <ShellHeader />
-    <SideMenu />
-    <MobileSideMenu />
+    <ShellHeader v-if="loggedUser" />
+    <SideMenu v-if="loggedUser" />
+    <MobileSideMenu v-if="loggedUser" />
     <cv-content id="main-content">
       <router-view />
     </cv-content>
@@ -16,6 +16,8 @@ import MobileSideMenu from "./components/MobileSideMenu";
 import axios from "axios";
 import StorageService from "@/mixins/storage";
 import WebSocketService from "@/mixins/websocket";
+import { mapState } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -25,9 +27,18 @@ export default {
     MobileSideMenu,
   },
   mixins: [StorageService, WebSocketService],
+  computed: {
+    ...mapState(["loggedUser"]),
+  },
   created() {
     // register to logout event
     this.$root.$on("logout", this.logout);
+
+    // check login
+    const loginInfo = this.getFromStorage("loginInfo");
+    if (loginInfo && loginInfo.username) {
+      this.setLoggedUserInStore(loginInfo.username);
+    }
 
     this.initWebSocket();
 
@@ -40,6 +51,7 @@ export default {
     this.closeWebSocket();
   },
   methods: {
+    ...mapActions(["setLoggedUserInStore"]),
     configureAxiosInterceptors() {
       const context = this;
       axios.interceptors.response.use(
@@ -56,7 +68,10 @@ export default {
       );
     },
     logout() {
-      this.deleteFromStorage("loggedUser");
+      console.log("logout"); ////
+
+      this.deleteFromStorage("loginInfo");
+      this.setLoggedUserInStore("");
 
       // redirect to login page
       if (this.$route.name !== "Login") {
@@ -89,6 +104,10 @@ a {
 }
 
 .bx--link {
+  text-decoration: underline;
+}
+
+.bx--toast-notification a {
   text-decoration: underline;
 }
 
@@ -164,25 +183,6 @@ a {
 }
 
 //// remove?
-.notification-drawer
-  .bx--tabs__nav-item--selected:not(.bx--tabs__nav-item--disabled)
-  .bx--tabs__nav-link,
-.notification-drawer
-  .bx--tabs__nav-item--selected:not(.bx--tabs__nav-item--disabled)
-  .bx--tabs__nav-link:focus,
-.notification-drawer
-  .bx--tabs__nav-item--selected:not(.bx--tabs__nav-item--disabled)
-  .bx--tabs__nav-link:active {
-  border-bottom: 2px solid #4589ff !important;
-}
-
-//// remove?
-.notification-drawer a.bx--tabs__nav-link:focus,
-.notification-drawer a.bx--tabs__nav-link:active {
-  outline: 2px solid #4589ff !important;
-}
-
-//// remove?
 .cv-tabs__panels {
   margin-top: $spacing-05;
 }
@@ -192,11 +192,6 @@ a {
   background-color: $ui-05 !important;
   color: $ui-01 !important;
   margin-top: 3px; //// fix
-}
-
-.global-search input:focus,
-.global-search input:active {
-  outline: 2px solid #4589ff !important;
 }
 
 .global-search label {
